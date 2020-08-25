@@ -1,0 +1,53 @@
+Maze Game
+
+- Goal:
+	The goal of the game is to kill all the monster in the board. Player must collect the power to kill the monster, 
+	otherwise they will be eaten. The power will be ramdomly generated at first and everytime it has been collected.
+
+- How the Board Works:
+	- The board is in the class Maze and it cooperates with the class Cell, The class Maze is used for generating 
+	   the maze, creating a valid maze map for the gameplay. The class Cell is used to represent the 
+	   basic board logic component.
+
+	- The Cell object will has two value which is the number of row and column, for representing 
+	   the location in the maze. The Cell also contains a value for represent the current spot is a open cell or a wall, 
+	   define by '0'(open cell) and '1'(wall). There will also be a value representing the cell has been revealed or not.
+
+	- The Maze will first create a 2D array with the elements of Cell for generate the foundation of the maze map,
+	   setting the outside wall. Then it will start building the inter wall and the path in the same function by go 
+	   though all the cell in the map, checking they are revealed or not. 
+	   To avoid having a invalid maze, there will be a function checking whether the maze is valid or not, 
+             	   if not it will generate a new maze until the maze is valid.
+
+	- All the variable will be private in both class Maze and Cell, applying the Encapsulation concept, but there 
+	  will be getter and setter function to support other class such as Game, Monster, Player and Power, which 
+	  wish to get the coordinate from the maze.
+
+	- The class Game in package GameLogic will call a generate function in Maze to generate map, it will keep 
+	   generate till it finds a valid board, then it will return the 2D array<Cell>. That 2D array will be the board
+	   in that game.
+
+- How the UI Works:
+	-  The UI is used for update the character location to the board which are the Player, Monsters and the Power. 
+	   It will also reveal the player's neighbor cells. UI will update everytime when some movement have been made
+	   during the game. Can think of the class Maze is for the foundation, and the class UI is the displayion.
+	
+	- Same as the class Maze, UI will have a 2D array but this time with the char element inside. Because it will 
+	   display the character by using symbols ('#' wall, '@' player, '!' monster, '$' power etc.) which are char data
+	   datatype. Drawing the interface by using get methods to get each object's status's value and 
+	   set our 2D char array’s value according to current play and monsters' status. There will be some private
+	   helper function for drawing the board. For example, makeOutsideWallsVisible() is used for making the 
+	   outside wall of the board revealed to player. These kind of helper function won't be expose to users.
+
+	- Since the location of the player and monster will keep on changing during the game, the UI will need to 
+	   keep updating new character location everytime there is a movment is made. It will call the getter function
+	   to get all the characters current location and storage the corresponding symbol to the 2D char array.
+	   It will also call the setter function for setting the player's neighbor cells to be revealed. Finally there 
+	   will be another helper function called "updateUI" to display the whole interface to the user. 
+
+- Summary:
+	We wish to separate the classes clearly, every classes have their own purpose. That's why the class Maze, will 
+	only for generate the board, it won't be able to know and show the characters' location. The UI will do the job 
+	for showing the characters, UI will collect all the things and display to the user, that's how the interface should
+	be. If we conbine all of them to Maze, there will be a high chance for getting bug and error, also it is read to 
+	read and understand.
